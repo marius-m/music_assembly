@@ -10,6 +10,19 @@ import org.slf4j.LoggerFactory
  * @since 2016-11-05
  */
 class MusicAssembler() {
+    fun testMp3ToMp4() {
+        val ffmpeg = FFmpeg()
+        logger.info("Running ${ffmpeg.version()}")
+        val ffprobe = FFprobe()
+        val builder = FFmpegBuilderMp3ToMp4()
+                .addInput("image.jpg")
+                .addInput("input.mp3")
+                .addOutput("output.mp4")
+                .done()
+        val executor = FFmpegExecutor(ffmpeg, ffprobe)
+        executor.createJob(builder).run()
+    }
+
     fun testAssembly() {
         val ffmpeg = FFmpeg()
         logger.info("Running ${ffmpeg.version()}")
