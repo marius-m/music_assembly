@@ -34,3 +34,5 @@ gradle/
 # Android Studio
 build/
 output.*
+output2.*
+result.*

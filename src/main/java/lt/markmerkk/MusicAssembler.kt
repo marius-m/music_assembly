@@ -14,13 +14,26 @@ class MusicAssembler() {
         val ffmpeg = FFmpeg()
         logger.info("Running ${ffmpeg.version()}")
         val ffprobe = FFprobe()
+        val executor = FFmpegExecutor(ffmpeg, ffprobe)
+
         val builder = FFmpegBuilderMp3ToMp4()
                 .addInput("image.jpg")
                 .addInput("input.mp3")
                 .addOutput("output.mp4")
                 .done()
-        val executor = FFmpegExecutor(ffmpeg, ffprobe)
+        val builder2 = FFmpegBuilderMp3ToMp4()
+                .addInput("image2.jpg")
+                .addInput("input.mp3")
+                .addOutput("output2.mp4")
+                .done()
+        val builder3 = FFmpegBuilderConcatWithCrossfade()
+                .addInput("output.mp4")
+                .addInput("output2.mp4")
+                .addOutput("result.mp4")
+                .done()
         executor.createJob(builder).run()
+        executor.createJob(builder2).run()
+        executor.createJob(builder3).run()
     }
 
     fun testAssembly() {
